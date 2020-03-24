@@ -1,0 +1,115 @@
+/*package whatever //do not write package name here */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class GFG {
+    static int N;
+    static class FastReader
+    {
+        BufferedReader br;
+        StringTokenizer st;
+        FastReader()
+        {
+            br=new BufferedReader(new InputStreamReader(System.in));
+        }
+        String next()
+        {
+            while(st==null || !st.hasMoreElements())
+            {
+                try
+                {
+                    st=new StringTokenizer(br.readLine());
+                }
+                catch(IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            return st.nextToken();
+        }
+        int nextInt()
+        {
+            return Integer.parseInt(next());
+        }
+    }
+    static class Cell
+    {
+        int x;
+        int y;
+        int dis;
+    }
+    static int getval(int arr[][],int a,int b)
+    {
+        boolean [][] visited=new boolean[N][N];
+        Queue<Cell>q=new LinkedList<>();
+        Cell c=new Cell();
+        c.x=a-1;
+        c.y=b-1;
+        c.dis=0;
+        q.add(c);
+        visited[a-1][b-1]=true;
+        int row[] = {-2,-1,-2,-1, 2, 1, 2, 1};
+
+        int col[] = {-1,-2, 1, 2, 1, 2,-1,-2};
+        int q1,z,u;
+        while(!q.isEmpty())
+        {
+            Cell d=q.remove();
+            
+            if(arr[d.x][d.y]==1)
+                return d.dis;
+            
+            for(int k=0;k<8;k++)
+            {
+                q1=d.x+row[k];
+                z=d.y+col[k];
+                u=d.dis;
+                if(q1>=0 &&q1<N &&z>=0 && z<N && !visited[q1][z])
+                {
+                    visited[q1][z]=true;
+                    Cell o=new Cell();
+                    o.x=q1; o.y=z;
+                    o.dis=u+1;
+                    q.add(o);
+                }
+            }
+            
+        }
+        return 1;
+        
+        
+        
+        
+    }
+	public static void main (String[] args) {
+		//code
+		FastReader sc=new FastReader();
+		int T=sc.nextInt();
+		while(T>0)
+		{
+		    int n=sc.nextInt();
+		    N=n;
+		    int[][]arr=new int[n][n];
+		    int x=sc.nextInt();
+		    int y=sc.nextInt();
+		    int x1=sc.nextInt();
+		    int y1=sc.nextInt();
+		    arr[x1-1][y1-1]=1;
+		    for(int i=0;i<n;i++)
+		    {
+		        for(int j=0;j<n;j++)
+		        {
+		            //System.out.print(arr[i][j]+" ");
+		        }
+		        //System.out.println();
+		    }
+		    int res=getval(arr,x,y);
+		    System.out.println(res);
+		    
+		    
+		    T--;
+		}
+	}
+}
